@@ -1,0 +1,134 @@
+{
+  "__index-CjOm7ZBt.js": {
+    "file": "_assets/_index-CjOm7ZBt.js",
+    "name": "_index",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-DzTMGdGF.js",
+      "index.html",
+      "_index-BbP3371Q.js"
+    ],
+    "dynamicImports": [
+      "node_modules/html2canvas/dist/html2canvas.esm.js",
+      "node_modules/dompurify/dist/purify.es.mjs",
+      "node_modules/canvg/lib/index.es.js"
+    ],
+    "css": [
+      "_assets/_index-H61ZTICE.css"
+    ]
+  },
+  "__index-H61ZTICE.css": {
+    "file": "_assets/_index-H61ZTICE.css",
+    "src": "__index-H61ZTICE.css"
+  },
+  "_index-BbP3371Q.js": {
+    "file": "_assets/index-BbP3371Q.js",
+    "name": "index"
+  },
+  "_vendor-DzTMGdGF.js": {
+    "file": "_assets/vendor-DzTMGdGF.js",
+    "name": "vendor"
+  },
+  "index.html": {
+    "file": "_assets/index-Dl7cAW_K.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": [
+      "_vendor-DzTMGdGF.js"
+    ],
+    "dynamicImports": [
+      "__index-CjOm7ZBt.js",
+      "node_modules/@capacitor/core/dist/index.js",
+      "node_modules/@capacitor/app/dist/esm/index.js",
+      "node_modules/@capacitor/browser/dist/esm/index.js",
+      "node_modules/@capacitor/browser/dist/esm/index.js"
+    ],
+    "css": [
+      "_assets/index-BwME_Lur.css"
+    ]
+  },
+  "node_modules/@capacitor/app/dist/esm/index.js": {
+    "file": "_assets/esm-BL3LeKsR.js",
+    "name": "esm",
+    "src": "node_modules/@capacitor/app/dist/esm/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "node_modules/@capacitor/core/dist/index.js",
+      "_vendor-DzTMGdGF.js",
+      "_index-BbP3371Q.js"
+    ],
+    "dynamicImports": [
+      "node_modules/@capacitor/app/dist/esm/web.js"
+    ]
+  },
+  "node_modules/@capacitor/app/dist/esm/web.js": {
+    "file": "_assets/web-CihQgu2h.js",
+    "name": "web",
+    "src": "node_modules/@capacitor/app/dist/esm/web.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "node_modules/@capacitor/core/dist/index.js",
+      "_index-BbP3371Q.js"
+    ]
+  },
+  "node_modules/@capacitor/browser/dist/esm/index.js": {
+    "file": "_assets/esm-BDJPdzZi.js",
+    "name": "esm",
+    "src": "node_modules/@capacitor/browser/dist/esm/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html",
+      "node_modules/@capacitor/core/dist/index.js",
+      "_vendor-DzTMGdGF.js",
+      "_index-BbP3371Q.js"
+    ],
+    "dynamicImports": [
+      "node_modules/@capacitor/browser/dist/esm/web.js"
+    ]
+  },
+  "node_modules/@capacitor/browser/dist/esm/web.js": {
+    "file": "_assets/web-CMagMtNr.js",
+    "name": "web",
+    "src": "node_modules/@capacitor/browser/dist/esm/web.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "node_modules/@capacitor/core/dist/index.js",
+      "_index-BbP3371Q.js"
+    ]
+  },
+  "node_modules/@capacitor/core/dist/index.js": {
+    "file": "_assets/dist-DbV5Y2tt.js",
+    "name": "dist",
+    "src": "node_modules/@capacitor/core/dist/index.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_index-BbP3371Q.js"
+    ]
+  },
+  "node_modules/canvg/lib/index.es.js": {
+    "file": "_assets/index.es-BH22ETHt.js",
+    "name": "index.es",
+    "src": "node_modules/canvg/lib/index.es.js",
+    "isDynamicEntry": true,
+    "imports": [
+      "_vendor-DzTMGdGF.js",
+      "__index-CjOm7ZBt.js",
+      "index.html",
+      "_index-BbP3371Q.js"
+    ]
+  },
+  "node_modules/dompurify/dist/purify.es.mjs": {
+    "file": "_assets/purify.es-CAi2OJFm.js",
+    "name": "purify.es",
+    "src": "node_modules/dompurify/dist/purify.es.mjs",
+    "isDynamicEntry": true
+  },
+  "node_modules/html2canvas/dist/html2canvas.esm.js": {
+    "file": "_assets/html2canvas.esm-B0tyYwQk.js",
+    "name": "html2canvas.esm",
+    "src": "node_modules/html2canvas/dist/html2canvas.esm.js",
+    "isDynamicEntry": true
+  }
+}

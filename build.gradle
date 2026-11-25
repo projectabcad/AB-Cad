@@ -1,0 +1,117 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace = "app.floot.u00856a9b602c47808cccd8cb4719edb4"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "app.floot.u00856a9b602c47808cccd8cb4719edb4"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 4
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}
+
+// Added by Floot: this project's own debug signing key.
+// Floot signs every APK of this app with the same debug key, so a new
+// build installs over the previous one. The key stays on Floot's build
+// machines; without the file this block does nothing and Gradle uses your
+// own debug key.
+def flootDebugKeystore = rootProject.file('../.floot-android-debug.keystore')
+if (flootDebugKeystore.exists()) {
+    android {
+        signingConfigs {
+            debug {
+                storeFile flootDebugKeystore
+                storeType 'pkcs12'
+                storePassword 'android'
+                keyAlias 'androiddebugkey'
+                keyPassword 'android'
+            }
+        }
+    }
+}
+
+// Added by Floot.
+// Read at script scope, not inside the buildTypes closure: Gradle configures
+// DSL closures delegate-first, and BuildType is not a thing we want resolving
+// "project" for us. A local def is captured lexically by the closures below.
+def flootMinifyRelease = !hasProperty('flootNoMinify')
+
+android {
+    buildTypes {
+        release {
+            // Play scores what fraction of an app's DEX is obfuscated and
+            // optimized, warns below 25% and restricts visibility/publishing
+            // from Feb 2027. The Capacitor template ships minifyEnabled false,
+            // which scores ~2% -- this is the whole reason that number is low;
+            // it is not a tuning problem.
+            //
+            // R8 needs no keep rules of ours for the bridge: @capacitor/android
+            // declares consumerProguardFiles keeping every
+            // com.getcapacitor.Plugin subclass BY NAME, which is what the
+            // Class.forName() over the classpath strings in
+            // assets/capacitor.plugins.json resolves against. Plugin modules
+            // ship no consumer rules of their own and do not need to -- they all
+            // extend Plugin. proguard-rules.pro adds the one rule that consumer
+            // file does not cover.
+            //
+            // Build with -PflootNoMinify to turn this off (e.g. a native plugin
+            // R8 cannot handle). Our release retry loop passes it when R8 is
+            // what failed.
+            minifyEnabled flootMinifyRelease
+            // shrinkResources is deliberately NOT enabled with it. It moves the
+            // obfuscation score not at all (that metric is DEX-only), the web
+            // bundle lives in assets/ which resource shrinking never touches,
+            // and its failure mode is a missing drawable at runtime -- invisible
+            // to the build, so the fallback could not catch it.
+        }
+    }
+}
+
+// Release signing lives in its own file so it never ships in the project zip;
+// without it a release build is simply unsigned.
+if (file('floot-signing.gradle').exists()) {
+    apply from: 'floot-signing.gradle'
+}
